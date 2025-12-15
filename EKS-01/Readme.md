@@ -1,9 +1,9 @@
 # **Creating an Amazon EKS cluster via AWS Console (IAM roles/users, access entries)**
 <!-- > **Allowing multiple users to access it (IAM roles/users, access entries)** -->
 
->**In this video, we’ll walk through the complete, beginner-friendly way to create an Amazon EKS cluster directly from the AWS Management Console, without using Terraform, eksctl, or any automation tools. We’ll purposely use the default VPC to keep the setup simple, but we’ll still follow AWS best practices wherever possible, including using the EKS API, assigning fine-grained IAM roles and policies, and controlling exactly which users and groups can access the cluster with admin or limited permissions.
+>In this video, we’ll walk through the complete, beginner-friendly way to create an Amazon EKS cluster directly from the AWS Management Console, without using Terraform, eksctl, or any automation tools. We’ll purposely use the default VPC to keep the setup simple, but we’ll still follow AWS best practices wherever possible, including using the EKS API, assigning fine-grained IAM roles and policies, and controlling exactly which users and groups can access the cluster with admin or limited permissions.
 
->This guide is designed for beginners who want to understand how EKS works under the hood before moving on to production-grade setups. In later videos in this series, we’ll build on this foundation to create a fully production-ready EKS environment using automation and advanced security patterns.**
+>This guide is designed for beginners who want to understand how EKS works under the hood before moving on to production-grade setups. In later videos in this series, we’ll build on this foundation to create a fully production-ready EKS environment using automation and advanced security patterns.
 
 
 ## **What you will learn**
@@ -22,6 +22,10 @@
 - How users are Authenticated in clusters
 
 ## **What is Amazon EKS**
+
+![Amazon EKS Architecture](./img.png)
+
+
 Amazon Elastic Kubernetes Service (EKS) is a fully managed Kubernetes control plane provided by AWS.
 - In simple terms:
     - Kubernetes manages containers
@@ -136,6 +140,7 @@ sudo mv ./kubectl /usr/local/bin
 kubectl version --short --client
 ```
 
+---
 
 ### **Commands**
 
@@ -157,7 +162,7 @@ aws eks update-kubeconfig --region <region> --name <cluster-name>
 ```
 aws eks create-access-entry \
   --cluster-name eks-demo \
-  --principal-arn arn:aws:iam::753968715689:user/terraform-user \
+  --principal-arn arn:aws:iam::xxxx:user/terraform-user \
   --type STANDARD
 ```
 
@@ -165,7 +170,7 @@ aws eks create-access-entry \
 ```
 aws eks associate-access-policy \
   --cluster-name eks-demo \
-  --principal-arn arn:aws:iam::753968715689:user/terraform-user \
+  --principal-arn arn:aws:iam::xxxxx:user/terraform-user \
   --policy-arn arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy \
   --access-scope type=cluster
 ```
@@ -174,7 +179,24 @@ aws eks associate-access-policy \
 ```
 aws eks describe-access-entry \
   --cluster-name eks-demo \
-  --principal-arn arn:aws:iam::753968715689:user/terraform-user
+  --principal-arn arn:aws:iam::xxxxx:user/terraform-user
+```
+**Create Access Entry for Role**
+
+`aws sts assume-role --role-arn <> --role-session-name <manager-session> --profile <user>`
+
+**Check Permissions**
+```
+kubectl auth can-i get pods
+
+kubectl auth can-i "*" "*"
+```
+
+**Updating .aws/config file**
+```
+[profile eks-view]
+role_arn = arn:aws:iam::xxxx:role/eks-cluster-access-managedd
+source_profile = developer
 ```
 **other usefull commands**
 
