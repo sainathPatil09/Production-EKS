@@ -47,6 +47,21 @@ Amazon Elastic Kubernetes Service (EKS) is a fully managed Kubernetes control pl
 - Azure AKS
 - etc
 
+  
+### **EKS vs Self-Managed Kubernetes**
+
+| Area               | AWS EKS         | Self-Managed Kubernetes   |
+| ------------------ | --------------- | ------------------------- |
+| Control Plane      | AWS managed     | You manage                |
+| HA                 | Built-in        | Manual                    |
+| Upgrades           | One-click       | Complex                   |
+| etcd               | AWS managed     | You manage                |
+| Security           | IAM, IRSA, KMS  | Manual                    |
+| Reliability        | SLA backed      | Best-effort               |
+| Operational Effort | Low             | Very High                 |
+| Cost               | Pay for cluster | Cheaper infra, higher ops |
+
+
 ## **Setup Cluster**
 ### **Configure cluster**
 - Go to console and search EKS
