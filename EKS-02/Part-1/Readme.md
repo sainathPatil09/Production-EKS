@@ -6,12 +6,10 @@
 ### 2. [Prerequisites](#prerequisites)
 ### 3. [Architecture Overview](#architecture-overview)
 ### 4. [Step-by-Step Guide](#step-by-step-guide)
-- [Create VPC]()
-- [Configure Subnets & Route Tables]()
-- [Deploy EKS Cluster]()
-- [Set up AWS Client VPN]()
-### 5. [Demo Tips]()
-### 6. [Key Takeaways]()
+- [Create VPC](#create-vpc)
+- [Create Client VPN](#create-client-vpn)
+- [Deploy EKS Cluster](#create-eks-in-vpc-with-private-endpoints)
+### 5. [Key Takeaways](#key-takeaways)
 
 ---
 
@@ -69,7 +67,7 @@ This will provide a solid foundation before we move to Terraform automation in P
     - Traffic IP address type (`IPv4`)
     - Client IPv4 CIDR (`ex: 192.0.0.0/16`)
         - Make sure CIDR do not overlap with VPC CIDR
-    - Follow this to create Certificates
+    - Follow this to create Certificates [Doc](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/client-auth-mutual-enable.html) or Watch [video](https://youtu.be/ImpSlD6LIU8?si=xtNlOAlAN-AmU3d7)
     - Server certificate ARN (`choose: server arn`)
     - Authentication options (`choose: 
 Use mutual authentication`)
@@ -78,20 +76,24 @@ Use mutual authentication`)
         - Client login banner (`check that box`)
         - and Give a message (`This is Welcome message you will get when you connect to VPN`)
     - Connection protocol (`select Split-tunnel`)
-3. ### **Create VPC**
+    - Once VPN is created (`select the VPN you created`)
+    - Go to Target network assocation (`click associate target network`)
+    - choose your `VPC id`and `private subnet`
+    - Next go to Authorization rule
+    - click `add authorization rule`
+    - Destation address (`your VPN CIDR ex: 192.0.0.0/16`)
+    - Grant access to (`select all users`)
+        - you can also select `access group if you have`
+    - Last click `Download client configuration`
+    - now modify the file that just got downloaded
+    - right click and open that file in notepad
+    - add `<cert> </cert>` and add client certificate in that tag
+    - add `<key> </key>` and add client key in that tag 
+    - create a profile and connect to VPN
+3. ### **Create EKS in VPC with Private Endpoints**
+    - I have already explained how to create a EKS Cluster in our previous video and in folder `EKS-01`
+    - In this demo we have our own VPC, so choose `VPC id`, `subnet id` the one you created 
 
-
-## **Demo Tips**
-
-- Draw architecture diagram first
-
-- Show VPN IP on local machine
-
-- SSH into EC2 in private subnet to demo routing
-
-- Then show kubectl connecting to private EKS endpoint
-
-- Highlight SG differences: EC2 vs EKS control plane
 
 ## **Key Takeaways**
 
