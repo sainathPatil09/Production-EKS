@@ -16,7 +16,7 @@
 ## **Objective**
 
 **In Part 1**, we will:
-
+- Watch demo [video](https://youtu.be/3sIUmDCPrhU?si=Kft4z5GgVtnI2dIm)
 - Learn why we need a Private EKS Cluster
 
 - Understand how AWS Client VPN allows secure access to private control plane from external users
