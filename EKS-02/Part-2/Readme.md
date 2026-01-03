@@ -6,4 +6,4 @@
 
 ## **Architecture Overview**
 
-![Architecture Diagram](../Part-1/img.png)
+![Architecture Diagram](../Part-1/image.png)

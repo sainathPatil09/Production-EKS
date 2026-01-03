@@ -41,7 +41,7 @@ This will provide a solid foundation before we move to Terraform automation in P
 
 ## **Architecture Overview**
 
-![Architecture Diagram](./img.png)
+![Architecture Diagram](./image.png)
 
 ## **Step-by-Step Guide**
 1. ### **Create VPC**
