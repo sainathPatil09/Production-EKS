@@ -7,3 +7,9 @@
 ## **Architecture Overview**
 
 ![Architecture Diagram](../Part-1/image.png)
+
+
+```
+terraform output -raw client_cert > client.crt
+terraform output -raw client_key > client.key
+```
