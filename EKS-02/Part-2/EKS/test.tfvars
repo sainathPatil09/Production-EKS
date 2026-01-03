@@ -1,0 +1,29 @@
+aws_region               = "ap-south-1"
+env                      = "dev"
+cluster_name             = "eks-demo"
+vpc_cidr                 = "10.0.0.0/16"
+vpc_name                 = "vpc"
+igw_name                 = "igw"
+public_subnet_count      = 2
+public_subnet_cidrs      = ["10.0.1.0/24", "10.0.2.0/24"]
+public_subnet_name       = "public-subnet"
+private_subnet_count     = 2
+private_subnet_cidrs     = ["10.0.3.0/24", "10.0.4.0/24"]
+private_subnet_name      = "private-subnet"
+availability_zones       = ["ap-south-1a", "ap-south-1b"]
+public_route_table_name  = "public-rt"
+private_route_table_name = "private-rt"
+eip_name                 = "nat-eip"
+nat_gateway_name         = "nat-gw"
+
+cluster_version           = "1.34"
+endpoint_private_access   = true
+endpoint_public_access    = false
+node_group_instance_types = ["t3.medium"]
+node_group_capacity_type  = "ON_DEMAND"
+node_group_desired_size   = 1
+node_group_max_size       = 1
+node_group_min_size       = 1
+
+vpn_domain                = "example.com"
+client_cidr_block         = "192.0.0.0/16"
