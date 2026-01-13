@@ -1,0 +1,29 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: Interns-role
+  namespace: default
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "nodes"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: Interns-role-binding
+  namespace: default
+subjects:
+  - kind: Group
+    name: Interns-Group
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: Interns-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
