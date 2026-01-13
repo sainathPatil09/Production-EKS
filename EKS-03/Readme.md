@@ -108,7 +108,7 @@ delete
 
 ### **IRSA Diagram**
 
-![Architecture Diagram](/irsa/image.png)
+![Architecture Diagram](irsa/image.png)
 
 By default:
 
