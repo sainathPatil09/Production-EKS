@@ -42,7 +42,7 @@ By going through this demo, you will understand:
 
 
 ### **RBAC Diagram**
-![Architecture Diagram](rbac\rbac.png)
+![Architecture Diagram](.\rbac\rbac.png)
 
 ### **RBAC (Role Based Access Control)**
 Imagine Kubernetes as a big office building with many rooms (resources like pods, services, secrets, deployments etc.). RBAC is like the security system that decides:
