@@ -203,7 +203,7 @@ eksctl create nodegroup --cluster=eks-demo \
                        --nodes-max=1 \
                        --node-volume-size=25 
 ```
-<!-- 
+
 ```
 aws sts get-caller-identity --profile intern-eks
 
@@ -228,7 +228,7 @@ aws eks disassociate-access-policy --cluster-name my-cluster --principal-arn arn
 
 ```
 
-
+<!-- 
 aws sts assume-role \
   --role-arn arn:aws:iam::xxxx:role/EKS-Intern-Role \
   --role-session-name intern-session
