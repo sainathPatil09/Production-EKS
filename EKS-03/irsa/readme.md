@@ -4,7 +4,7 @@ kubectl get sa my-service-account -o yaml
 
 
 **Create and associate IAM Role**
-
+```
 eksctl create iamserviceaccount \
 --name my-service-account \
 --namespace default \
@@ -13,11 +13,11 @@ eksctl create iamserviceaccount \
 --region ap-south-1 \
 --attach-policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess \
 --approve
+```
 
 
 
-
-
+```
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -37,6 +37,7 @@ eksctl create iamserviceaccount \
     ]
 }
 
+```
 
  kubectl api-resources 
 
