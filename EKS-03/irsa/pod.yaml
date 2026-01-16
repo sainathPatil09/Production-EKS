@@ -10,3 +10,5 @@ spec:
       command: ["/bin/sh", "-c", "sleep 3600"]
       imagePullPolicy: IfNotPresent
   restartPolicy: Always
+
+  # serviceAccountName
