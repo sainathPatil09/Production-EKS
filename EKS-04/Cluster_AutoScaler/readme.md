@@ -98,3 +98,72 @@ If such pods exist:
 
 
 ![Architecture Diagram](images/img1.png)
+
+kubectl logs pod/cluster-autoscaler-78575fcf9b-mdjbw -n kube-system
+
+**Creating Role of Service Account**
+
+[Kubernetes Cluster Autoscaler](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md)
+
+**Trust Policy**
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::xxxx:oidc-provider/oidc.eks.ap-south-1.amazonaws.com/id/781425C7754986761E3612B912622"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "oidc.eks.ap-south-1.amazonaws.com/id/781425C7754986761E3612B912622:sub": "system:serviceaccount:kube-system:cluster-autoscaler",
+                    "oidc.eks.ap-south-1.amazonaws.com/id/781425C7754986761E3612B912622:aud": "sts.amazonaws.com"
+                }
+            }
+        }
+    ]
+}
+```
+
+**Attach this policy to that role**
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "autoscaling:DescribeAutoScalingGroups",
+                "autoscaling:DescribeAutoScalingInstances",
+                "autoscaling:DescribeLaunchConfigurations",
+                "autoscaling:DescribeScalingActivities",
+                "ec2:DescribeInstanceTypes",
+                "ec2:DescribeLaunchTemplateVersions"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "autoscaling:SetDesiredCapacity",
+                "autoscaling:TerminateInstanceInAutoScalingGroup"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
+```
+
+**add this annotations**
+
+```
+annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::xxxx:role/<ROLE_NAME>
+```
