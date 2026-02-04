@@ -17,6 +17,7 @@ variable "private_subnet_count" {}
 variable "private_subnet_cidr_block" {
   type = list(string)
 }
+
 variable "private_subnet_name" {}
 variable "public_route_table_name" {}
 variable "private_route_table_name" {}
@@ -43,10 +44,8 @@ variable "addons" {
     version = string
   }))
 }
+
 variable "instance_types" {}
 variable "desired_capacity" {}
 variable "min_capacity" {}
 variable "max_capacity" {}
-# variable "desired_capacity_spot" {}
-# variable "min_capacity_spot" {}
-# variable "max_capacity_spot" {}
