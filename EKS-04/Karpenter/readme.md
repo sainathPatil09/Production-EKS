@@ -56,6 +56,8 @@ Karpenter reacts directly to unschedulable pods and provisions exactly what is n
 * ⚖️ Intelligent instance selection across families and sizes
 * ☁️ Native AWS integration
 
+<img src="./images/img1.png">
+
 Karpenter is ideal for:
 
 * Spiky workloads
@@ -68,6 +70,8 @@ Karpenter is ideal for:
 ## 4. Deep Dive: How Karpenter Works
 
 ### 4.1 High-Level Workflow
+
+<img src="./images/img2.png">
 
 1. Pod is created
 2. Kubernetes scheduler fails to schedule the pod
