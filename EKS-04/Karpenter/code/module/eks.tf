@@ -59,10 +59,17 @@ resource "aws_eks_node_group" "ondemand-node" {
 
     labels = {
       type = "on-demand"
+      node-role = "system"
     }
 
     update_config {
       max_unavailable = 1
+    }
+
+    taint {
+      key    = "CriticalAddonsOnly"
+      value  = "true"
+      effect = "NO_SCHEDULE"
     }
 
 
