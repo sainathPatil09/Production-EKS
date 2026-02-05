@@ -175,7 +175,22 @@ chmod 700 get_helm.sh
 ./get_helm.sh
 ```
 
-## install karpenter
+
+## Install CRDs
+```
+kubectl create namespace "${KARPENTER_NAMESPACE}" || true
+kubectl create -f \
+    "https://raw.githubusercontent.com/aws/karpenter-provider-aws/v${KARPENTER_VERSION}/pkg/apis/crds/karpenter.sh_nodepools.yaml"
+kubectl create -f \
+    "https://raw.githubusercontent.com/aws/karpenter-provider-aws/v${KARPENTER_VERSION}/pkg/apis/crds/karpenter.k8s.aws_ec2nodeclasses.yaml"
+kubectl create -f \
+    "https://raw.githubusercontent.com/aws/karpenter-provider-aws/v${KARPENTER_VERSION}/pkg/apis/crds/karpenter.sh_nodeclaims.yaml"
+kubectl apply -f karpenter.yaml
+
+```
+
+
+## Install karpenter
 ```
 helm template karpenter oci://public.ecr.aws/karpenter/karpenter --version "${KARPENTER_VERSION}" --namespace karpenter \
     --set "settings.clusterName=<Cluster-name>" \
