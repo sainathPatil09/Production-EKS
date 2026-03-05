@@ -1,0 +1,53 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: product-deploy
+  namespace: e-commerce
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: product
+  template:
+    metadata:
+      labels:
+        app: product
+    spec:
+      containers:
+        - name: product
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          command: ["/bin/sh"]
+          args:
+          - -c
+          - |
+            mkdir -p /usr/share/nginx/html/product
+            cat > /usr/share/nginx/html/product/index.html <<EOF
+            <!DOCTYPE html>
+            <html>
+              <body>
+                <h1>Welcome to Product Service</h1>
+                <h2>AWSome AI</h2>
+              </body>
+            </html>
+            EOF
+            nginx -g 'daemon off;'
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+  namespace: e-commerce
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /product/index.html
+spec:
+  selector:
+    app: product
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP

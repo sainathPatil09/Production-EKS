@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: e-commerce-ingress
+  namespace: e-commerce
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}, {"HTTP": 80}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:xxxx:certificate/e99bfbb3-68b0-4675-a152-ab7dd04b9c84
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-port: traffic-port
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '15'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
+    alb.ingress.kubernetes.io/healthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/success-codes: '200'
+
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - path: /product
+            pathType: Prefix
+            backend:
+              service:
+                name: product-service
+                port:
+                  number: 80
+          - path: /cart
+            pathType: Prefix
+            backend:
+              service:
+                name: cart-service
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: payments-service
+                port:
+                  number: 80
