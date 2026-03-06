@@ -141,6 +141,59 @@ ALB is automatically provisioned by AWS Load Balancer Controller.
 **Test using ALB DNS name.**
 
 ### Phase 2: Enable TLS (Production Setup)
+#### Step 1: Create Hosted Zone
+Using:
+- Amazon Route 53
+
+Create public hosted zone:
+```
+example.com
+```
+
+#### Step 2: Create ACM Certificate
+Using:
+- AWS Certificate Manager
+
+
+#### Step 3: Update Ingress for TLS
+Add Annotations:
+```
+alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}, {"HTTP": 80}]'
+alb.ingress.kubernetes.io/certificate-arn: <certificate arn>
+alb.ingress.kubernetes.io/ssl-redirect: '443'
+```
+Reapply:
+```
+kubectl apply -f ingress.yaml
+```
+
+### Phase 3: Host-Based Routing
+Final Production Routing:
+
+| Host                 | Service          |
+| -------------------- | ---------------- |
+| cart.example.com     | cart service     |
+| product.example.com  | product service  |
+| payments.example.com | payments service |
+
+Ingress rules:
+```
+rules:
+  - host: cart.example.com
+  - host: product.example.com
+  - host: payments.example.com
+```
+ALB routes traffic based on host headers.
+
+### Traffic Flow
+<image src='./images/traffic.png'>
+
+
+## **Cleanup**
+To destroy infrastructure:
+```
+terraform destroy
+```
 
 
 
